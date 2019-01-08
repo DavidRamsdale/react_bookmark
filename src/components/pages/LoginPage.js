@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import RegisterForm from "./../forms/RegisterForm";
+import LoginForm from "./../forms/LoginForm";
 
 class RegisterPage extends Component {
     render() {
 
         return(
             <div>
-                <h1>Register a new user</h1>
-                <RegisterForm onRegisterFormSubmit={this.props.onRegisterFormSubmit} />
+                <h1>Login</h1>
+                <LoginForm onRegisterFormSubmit={this.props.onRegisterFormSubmit} />
             </div>
         );
     }
