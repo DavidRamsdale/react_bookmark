@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
-class RegisterForm extends Component {
+class LoginForm extends Component {
     state = { 
         email: "", 
         password: "" 
@@ -15,7 +15,7 @@ class RegisterForm extends Component {
         axios.post("http://localhost:3000/auth/login", { email, password})
             .then(response => {
                 this.props.onRegisterFormSubmit(response.data.token, () => {
-                    this.props.history.push("/")
+                this.props.history.push("/")
                 });
             })
             .catch(err => console.log(err));
@@ -46,4 +46,4 @@ class RegisterForm extends Component {
     }
 }
 
-export default withRouter(RegisterForm);
+export default withRouter(LoginForm);

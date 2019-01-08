@@ -19,7 +19,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    {token && <button onClick={this.props.setAuthToken()}>Logout</button>}
+                    {token && <button onClick={() => {this.props.setAuthToken(null)}}>Logout</button>}
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/register" render={(props) => {
