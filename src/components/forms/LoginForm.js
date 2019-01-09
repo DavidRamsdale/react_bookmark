@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import axios from "axios";
+import { setAuthToken } from "./../../actions";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 class LoginForm extends Component {
     state = { 
@@ -14,9 +16,8 @@ class LoginForm extends Component {
 
         axios.post("http://localhost:3000/auth/login", { email, password})
             .then(response => {
-                this.props.onRegisterFormSubmit(response.data.token, () => {
-                this.props.history.push("/")
-                });
+                this.props.setAuthToken(response.data.token);
+                this.props.history.push("./bookmarks");
             })
             .catch(err => console.log(err));
     }
@@ -46,4 +47,6 @@ class LoginForm extends Component {
     }
 }
 
-export default withRouter(LoginForm);
+export default connect(null, {
+    setAuthToken
+})(withRouter(LoginForm));

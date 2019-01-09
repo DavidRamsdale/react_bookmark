@@ -1,3 +1,5 @@
+import LocalApi from "./../apis/local";
+
 export const setAuthToken = (token) => {
     sessionStorage.setItem("token", token);
     
@@ -7,10 +9,24 @@ export const setAuthToken = (token) => {
     };
 }
 
-// export const clearToken = () => {
-//     sessionStorage.clear();
-    
-//     return {
-//         type: "CLEAR_TOKEN"
-//     };
-// }
+export const fetchBookMarks = () => {
+    return async ( dispatch, getState ) => {
+        let response = await LocalApi.get("/bookmarks");
+
+        dispatch({
+            type: "BOOKMARK_LIST",
+            payload: response.data
+        })
+    }
+}
+
+export const createBookMark = ({ title, url }) => {
+    return async (dispatch, getState) => {
+        let response = await LocalApi.post("/bookmarks", {title, url});
+
+        dispatch({
+            type: "BOOKMARK_LIST",
+            payload: response.data
+        });
+    }
+}
