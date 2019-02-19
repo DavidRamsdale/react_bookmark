@@ -13,7 +13,7 @@ class LoginForm extends Component {
     onFormSubmit = (event) => {
         event.preventDefault();
         const { email, password } = this.state;
-
+        console.log(state);
         axios.post("http://localhost:3000/auth/login", { email, password})
             .then(response => {
                 this.props.setAuthToken(response.data.token);
