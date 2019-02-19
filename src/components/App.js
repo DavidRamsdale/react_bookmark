@@ -10,23 +10,27 @@ import LocalApi from "./../apis/local";
 import PrivateRoute from "./PrivateRoute";
 import { setAuthToken } from "./../actions";
 import { connect } from "react-redux";
+import ReactGA from "react-ga"
+import withTracker from "./google_analytics/withTracker";
+
 
 class App extends Component {
-
+    
     render() {
         const { token } = this.props;
-
+        
         return (
             <BrowserRouter>
                 <div>
                     {token && <button onClick={() => {this.props.setAuthToken(null)}}>Logout</button>}
                     <Switch>
-                        <Route exact path="/" component={HomePage} />
-                        <Route exact path="/register" render={(props) => {
+                        <Route exact path="/" component={withTracker(HomePage)} />
+                        {/* <Route exact path="/register" render={(props) => {
                             return <RegisterPage {...props} onRegisterFormSubmit={this.onRegisterFormSubmit} />
-                        }} />
-                        <Route exact path="/login" component={LoginPage} />
-                        <PrivateRoute exact path="/bookmarks" component={BookmarksPage} />
+                        }} /> */}
+                        <Route exact path="/" component={withTracker(RegisterPage)} /> 
+                        <Route exact path="/login" component={withTracker(LoginPage)} />
+                        <PrivateRoute exact path="/bookmarks" component={withTracker(BookmarksPage)} />
                         <Route component={NotFoundPage} />
                     </Switch>
                 </div>
@@ -40,5 +44,9 @@ const mapStateToProps = (state) => {
         token: state.auth.token
     }
 }
+
+ReactGA.initialize('UA-132349651-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 
 export default connect(mapStateToProps, { setAuthToken })(App);
